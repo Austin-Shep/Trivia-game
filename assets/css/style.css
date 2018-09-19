@@ -1,0 +1,17 @@
+.answer{
+    background-color: chartreuse;
+    color: red;
+    padding: 2px 15px;
+    margin: 5px;
+    font-size: 1.3rem;
+    text-align: center;
+} 
+
+.wronglight{
+    background-color: orange;
+    color:blue; 
+}
+.highlight{
+    background-color: blue;
+    color:orange;
+}
