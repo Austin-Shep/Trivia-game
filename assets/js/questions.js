@@ -4,19 +4,19 @@ questionList = [
             write: 'What is your name?',
             answers:[
                 ansrA={
-                    'content':'a',
+                    'content':'lorem ipsum dolor aset ',
                     isCorrect: false,
                 },
                 ansrB= {
-                    'content':'b',
+                    'content':'lorem ipsum dolor aset',
                     isCorrect: true,
                 },
                 ansrC= {
-                    'content':'c',
+                    'content':'lorem ipsum dolor aset',
                     isCorrect: false,
                 },
                 ansrD = {
-                    'content':'d',
+                    'content':'lorem ipsum dolor aset',
                     isCorrect: false,
                 },
             ],            
@@ -25,19 +25,19 @@ questionList = [
             write: 'What is your quest?',
             answers:[
                 ansrA={
-                    'content':'a2',
+                    'content':'lorem ipsum dolor aset',
                     isCorrect: false,
                 },
                 ansrB= {
-                    'content':'b2',
+                    'content':'lorem ipsum dolor aset',
                     isCorrect: false,
                 },
                 ansrC= {
-                    'content':'c2',
+                    'content':'lorem ipsum dolor aset',
                     isCorrect: false,
                 },
                 ansrD = {
-                    'content':'d2',
+                    'content':'lorem ipsum dolor aset',
                     isCorrect: true,
                 },
             ],            

@@ -1,23 +1,62 @@
+body{
+    background-image: url(../images/bg.jpg.jpg);
+    background-size: 100%;
+}
 .answer{
-    background-color: chartreuse;
-    color: red;
+    border-radius: .2rem;
+    border: 3px solid whitesmoke;
+    background-color: pink;
     padding: 2px 15px;
-    margin: 5px;
-    font-size: 1.3rem;
+    margin: 20px;
+    font-size: 1.6rem;
     text-align: center;
+    display: inline-block;
+    left:5%;
+    font-family: 'Times New Roman', Times, serif;
 } 
+.answer:hover{
+    background-color: orange;
+    color:blue; 
+    transform: translate(5px 5px);
+    border: 3px outset;
+    /* transition: transform 0.5s; */
+}
 
 .wronglight{
     background-color: orange;
     color:blue; 
+    border: 3px outset;
+
 }
 .highlight{
     background-color: blue;
     color:orange;
+    border: 3px outset;
 }
 
 .fadeOut{
     visibility: hidden;
     opacity: 0;
     transition: visibility 0s 2s, opacity 2s linear;
+}
+
+.fadeIn{
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 2s linear;
+}
+
+#gameBox{
+    position: fixed;
+    border-radius: 1rem;
+    height: 80%;
+    width: 75%;
+    background-image: url(../images/brick.jpg);
+    background-size: 100%;
+    margin: 4% 12.5% 5% ;
+    text-align: center;
+    box-shadow: 1px 6px 4px 0 pink;
+}
+#topic{
+margin-bottom: 10px;
 }

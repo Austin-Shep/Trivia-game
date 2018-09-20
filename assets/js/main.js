@@ -1,7 +1,7 @@
 let topic = document.getElementById('topic');
 let timer = document.getElementById('timer');
 let question = document.getElementsByClassName('question');
-let score = document.getElementById('score');
+let score = document.querySelector('div.score');
 var queue = document.querySelector('#answerQueue'); 
 let gameRunning = false;
 let gameInit = false;
@@ -9,22 +9,31 @@ let questionWrit = false;
 let answerWrit = false;
 var answerChose = false;
 let target;
-let points = 0; 
+let points = '0'; 
 let intervalId;
 let number = 21;
 let j = 0;
 let conatiner;
 let cR;
+let gameOver1 = false
 
 //functions=======================================// 
 //writes the score
-function writeScore(){ score.innerHTML = points}
+function clearClass(param){
+    param.removeAttribute('class');
+}
+
+function writeScore(){
+    score.setAttribute('class', 'animated rotateIn');
+    score.innerHTML = "score: " + points;
+    }
 //fresh slate
 function initialize(){
     gameRunning = false;
     gameInit = true;
     points = '0';
-    writeScore();    
+    writeScore(); 
+    j= 0;   
 };
 function resetBooleans(){
     gameRunning = false;
@@ -37,9 +46,7 @@ function resetBooleans(){
 
 
 //for when the incorect answer is selected
-function incramentJ(){
-    j++;
-}
+
 
 //timer run
 function run() {
@@ -51,29 +58,48 @@ function interludes(){
     clearInterval(intervalId);
     intervalId = setInterval(interDecrement, 1000);
 }
+//game over 
+function gameOver(){
+    var g = document.createElement('H1');
+    g.setAttribute('class', 'animated bounceInDown');
+    g.textContent= "That's All Folks!"
+    var s = document.createElement('H2')
+    s.setAttribute('class', 'bounceIn');
+    s.textContent = 'Final Score: ' + points;
+    g.appendChild(s)
+    queue.innerHTML = g;
+    
+}
+
 //timer for the interlude
 function interDecrement(){
-    number--;
-    timer.innerHTML = 'Okay, next one in: ' + number + ' secs';
-    if(number < 4) queue.setAttribute('class', 'fadeOut');
-    if(number===0){
-        topic.innerHTML = '';
-        queue.removeAttribute('class', 'fadeOut');
-        stop();
-        resetBooleans();
-        writeQuestion();
-        number = 21;
-        run();
+    if(!gameOver1){
+        number--;
+        timer.innerHTML = 'Okay, next one in: ' + number + ' secs';
+        if(number < 4) queue.setAttribute('class', 'fadeOut');
+        if(number===0){
+            topic.innerHTML = '';
+            queue.removeAttribute('class', 'fadeOut')
+            stop();
+            clearClass(score);
+            resetBooleans();
+            j++;
+            writeQuestion();
+            number = 21;
+            return run();
+        }
     }
 }
 
 //timer countdown
 function decrement() {
+    if(!gameOver1){
     number--;
     timer.innerHTML = number + ' seconds left!';
-    if(number===0){
-        stop();
-        timout();
+        if(number===0){
+            stop();
+            timout();
+        }
     }
 }
 //timer stop
@@ -84,10 +110,15 @@ function stop(){
 function writeQuestion(){
     //function wont run if the question is 'Writ'
     if(!questionWrit){
-        
+        if(j >= questionList.length ){
+            gameOver()
+            gameOver1 = true;
+        }
+        else{
         queue.innerHTML = '';                       
         var jq = document.createElement('h2');
         jq.setAttribute('id', 'question');
+        jq.setAttribute('class', 'animated bounceInRight')
         jq.textContent = questionList[j]['write'];
         queue.appendChild(jq);
 
@@ -96,8 +127,8 @@ function writeQuestion(){
                     console.log(questionList[j].answers[l]);
                     var la = questionList[j].answers[l];
                     var aw = document.createElement('span');
-                    var br = document.createElement('br')
-                    aw.setAttribute('class', 'answer');
+                    var br = document.createElement('br');
+                    aw.setAttribute('class', 'answer animated bounceInLeft')
                     aw.setAttribute('data-value', la['isCorrect']);
                     aw.innerHTML = la['content'];
                     queue.appendChild(aw);
@@ -109,32 +140,40 @@ function writeQuestion(){
             };
         return questionWrit = true;                  
     };
+};
+};
+
+function resultText(param){
+    let re = document.createElement('p');
+    re.setAttribute('class', 'animated jackInTheBox');
+    if(param){
+        re.innerHTML= "Good Job!"
+    }
+    if(!param){
+        re.innerHTML = "Beter Luck Next Time!"
+    }
+    if(param === 'time'){
+        re.innerHTML = "Gotta Be Quicker Than That!"
+    }
+    return topic.appendChild(re)
 }
-function trueText(){
-    topic.innerHTML = "correct\!";
-};
-function falseText(){
-    topic.innerHTML = '*err!* you\'re wrong';
-};
-function timeText(){
-    topic.innerHTML = '*errrr!* outatime';
-};
+
+
 function guessTrue(){
-    trueText();
+    resultText(true)
     target.className += ' highlight';
     points++;
-    incramentJ();
     stop();
     number = 7;
     interludes();
+    writeScore();
     return answerChose = true;
 };
 
 function guessFalse(){
-    falseText();
+    resultText(false)
     target.className += ' wronglight';
     cR.className += ' highlight';
-    incramentJ();
     stop();
     number = 7;
     interludes();
@@ -143,9 +182,8 @@ function guessFalse(){
 };
 
 function timout(){
-    timeText();
+    resultText('time')
     cR.className += ' highlight';
-    incramentJ();
     stop();
     number = 7;
     interludes();
@@ -174,7 +212,7 @@ document.addEventListener('keyup', function(){
 document.addEventListener('click', function(event){
     target = event.target.closest('span');
     if(answerChose) return false;
-    if(target.className != 'answer') return false;
+    if(!target.className.includes('answer')) return false;
     
     console.log('conatiner = ' + conatiner);
     console.log(cR);
