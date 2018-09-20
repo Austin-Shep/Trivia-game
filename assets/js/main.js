@@ -1,7 +1,8 @@
-let topic = document.querySelectorAll('.topic');
+let topic = document.getElementById('topic');
 let timer = document.getElementById('timer');
 let question = document.getElementsByClassName('question');
 let score = document.getElementById('score');
+var queue = document.querySelector('#answerQueue'); 
 let gameRunning = false;
 let gameInit = false;
 let questionWrit = false;
@@ -54,8 +55,10 @@ function interludes(){
 function interDecrement(){
     number--;
     timer.innerHTML = 'Okay, next one in: ' + number + ' secs';
+    if(number < 4) queue.setAttribute('class', 'fadeOut');
     if(number===0){
-
+        topic.innerHTML = '';
+        queue.removeAttribute('class', 'fadeOut');
         stop();
         resetBooleans();
         writeQuestion();
@@ -81,7 +84,7 @@ function stop(){
 function writeQuestion(){
     //function wont run if the question is 'Writ'
     if(!questionWrit){
-        var queue = document.querySelector('#answerQueue'); 
+        
         queue.innerHTML = '';                       
         var jq = document.createElement('h2');
         jq.setAttribute('id', 'question');
@@ -108,7 +111,7 @@ function writeQuestion(){
     };
 }
 function trueText(){
-    topic.innerHTML = "*ding!ding!ding!* correct!";
+    topic.innerHTML = "correct\!";
 };
 function falseText(){
     topic.innerHTML = '*err!* you\'re wrong';
