@@ -1,4 +1,4 @@
-let topic = document.getElementsByClassName('topic');
+let topic = document.querySelectorAll('.topic');
 let timer = document.getElementById('timer');
 let question = document.getElementsByClassName('question');
 let score = document.getElementById('score');
@@ -36,7 +36,6 @@ function resetBooleans(){
 
 
 //for when the incorect answer is selected
-
 function incramentJ(){
     j++;
 }
@@ -51,11 +50,12 @@ function interludes(){
     clearInterval(intervalId);
     intervalId = setInterval(interDecrement, 1000);
 }
-
+//timer for the interlude
 function interDecrement(){
     number--;
     timer.innerHTML = 'Okay, next one in: ' + number + ' secs';
     if(number===0){
+
         stop();
         resetBooleans();
         writeQuestion();
@@ -79,7 +79,7 @@ function stop(){
 }
 //writes the question, answers and such, based on 'j'
 function writeQuestion(){
-    
+    //function wont run if the question is 'Writ'
     if(!questionWrit){
         var queue = document.querySelector('#answerQueue'); 
         queue.innerHTML = '';                       
@@ -107,7 +107,51 @@ function writeQuestion(){
         return questionWrit = true;                  
     };
 }
+function trueText(){
+    topic.innerHTML = "*ding!ding!ding!* correct!";
+};
+function falseText(){
+    topic.innerHTML = '*err!* you\'re wrong';
+};
+function timeText(){
+    topic.innerHTML = '*errrr!* outatime';
+};
+function guessTrue(){
+    trueText();
+    target.className += ' highlight';
+    points++;
+    incramentJ();
+    stop();
+    number = 7;
+    interludes();
+    return answerChose = true;
+};
 
+function guessFalse(){
+    falseText();
+    target.className += ' wronglight';
+    cR.className += ' highlight';
+    incramentJ();
+    stop();
+    number = 7;
+    interludes();
+    return answerChose = true;
+
+};
+
+function timout(){
+    timeText();
+    cR.className += ' highlight';
+    incramentJ();
+    stop();
+    number = 7;
+    interludes();
+    return answerChose = true;
+};
+
+/////=========================End functions==============================////
+
+/////=========================Event Listeners============================////
 document.addEventListener('keyup', function(){
     if(gameRunning) return false;
 
@@ -129,7 +173,7 @@ document.addEventListener('click', function(event){
     if(answerChose) return false;
     if(target.className != 'answer') return false;
     
-    console.log('conatiner = ' +conatiner)
+    console.log('conatiner = ' + conatiner);
     console.log(cR);
         
         x = target.getAttribute('data-value')
@@ -140,38 +184,6 @@ document.addEventListener('click', function(event){
         else if(x == 'true') guessTrue();
 });
 
-function guessTrue(){
-    console.log('*ding!ding!ding!* correct!')
-    target.className += ' highlight';
-    points++;
-    incramentJ()
-    stop();
-    number = 7;
-    interludes();
-
-   return answerChose = true;
-};
-
-function guessFalse(){
-    console.log('*err!* you\'re wrong');
-    target.className += ' wronglight';
-    cR.className += ' highlight';
-    incramentJ()
-    stop()
-    number = 7;
-    interludes()
-    return answerChose = true;
-
-};
-
-function timout(){
-    console.log('*errrr!* outatime')
-    cR.className += ' highlight';
-    incramentJ()
-    stop()
-    number = 7;
-    interludes()
-    return answerChose = true;
-}
+////=================End Event Listeners=======================///
 
 
