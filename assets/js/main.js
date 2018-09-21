@@ -15,6 +15,9 @@ let number = 21;
 let j = 0;
 let conatiner;
 let cR;
+let g;
+let s;
+
 let gameOver1 = false
 
 //functions=======================================// 
@@ -40,12 +43,14 @@ function resetBooleans(){
     questionWrit = false;
     answerWrit = false;
     answerChose = false;
+    
 }
-
-//listens for start game, will only run once
-
-
-//for when the incorect answer is selected
+function restart(){
+    resetBooleans();
+    gameOver1 = false;
+    gameInit = false;
+    queue.innerHTML = '';
+}
 
 
 //timer run
@@ -60,15 +65,28 @@ function interludes(){
 }
 //game over 
 function gameOver(){
-    var g = document.createElement('H1');
+    queue.innerHTML = '';
+    let d = document.createElement('div');
+    g = document.createElement('H1');
+    s = document.createElement('H2');
+
     g.setAttribute('class', 'animated bounceInDown');
-    g.textContent= "That's All Folks!"
-    var s = document.createElement('H2')
-    s.setAttribute('class', 'bounceIn');
-    s.textContent = 'Final Score: ' + points;
-    g.appendChild(s)
-    queue.innerHTML = g;
+    g.innerHTML= "That's All Folks!";
+
     
+    s.setAttribute('class', 'bounceIn');
+    s.innerHTML = 'Final Score: ' + points;
+
+    let tA = document.createElement('button');
+    tA.textContent= 'play again?';
+    tA.setAttribute('class', 'animated bounce');
+    tA.setAttribute('onClick', 'javascript:restart();')
+    
+    g.appendChild(s);
+    d.appendChild(g);
+    d.appendChild(tA);
+    queue.appendChild(d);
+    return gameOver1 = true;
 }
 
 //timer for the interlude
@@ -110,11 +128,10 @@ function stop(){
 function writeQuestion(){
     //function wont run if the question is 'Writ'
     if(!questionWrit){
-        if(j >= questionList.length ){
-            gameOver()
-            gameOver1 = true;
+        if(j+1 > questionList.length){
+            gameOver();
         }
-        else{
+        else if (!gameOver1){
         queue.innerHTML = '';                       
         var jq = document.createElement('h2');
         jq.setAttribute('id', 'question');
