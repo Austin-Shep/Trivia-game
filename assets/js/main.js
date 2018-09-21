@@ -71,8 +71,11 @@ function gameOver(){
     s = document.createElement('H2');
 
     g.setAttribute('class', 'animated bounceInDown');
-    g.innerHTML= "That's All Folks!";
-
+    if(points >= 3){
+        g.innerHTML= "You may cross";
+    }else{
+        g.innerHTML= "*AAHHHHHHhhh!!......*"
+    }
     
     s.setAttribute('class', 'bounceIn');
     s.innerHTML = 'Final Score: ' + points;
